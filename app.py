@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from rank_bm25 import BM25Okapi
 import time
+import os
 
 # --- PAGE CONFIG ---
 st.set_page_config(
@@ -965,6 +966,123 @@ if is_search_page:
     </div>
 </div>
 """, unsafe_allow_html=True)
+
+# --- ALGORITHM COMPARISON (Landing Page) ---
+if not is_search_page:
+    st.markdown("""
+<div style='margin-top:26px;'>
+    <div class='section-header'>
+        <div style='display:flex;align-items:center;justify-content:center;gap:14px;'>
+            <span style='font-size:1.4rem;'>&#128300;</span>
+            <span style='font-weight:800;font-size:2.2rem;'>Algorithm Comparison</span>
+        </div>
+        <p style='color:#92400e;margin-top:12px;text-align:center;font-size:1.05rem;'>Visual comparison of TF-IDF vs BM25 (Overlap@k and rank differences). Click the button to generate or refresh plots.</p>
+        <div style='display:flex;justify-content:center;margin-top:18px;'>
+            <div id='compare-cta-placeholder'></div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    # Style the Streamlit button so it visually matches the CTA inside `.section-header`
+    st.markdown("""
+    <style>
+        .section-header .stButton>button{
+            background: linear-gradient(90deg,#0891b2,#06b6d4) !important;
+            color: white !important;
+            padding: 10px 20px !important;
+            border-radius: 40px !important;
+            font-weight: 700 !important;
+            border: none !important;
+            box-shadow: 0 8px 20px rgba(6,182,212,0.14) !important;
+        }
+        .section-header .stButton>button:hover{ transform: translateY(-3px); }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Center the Streamlit button under the section (appears visually inside the section header)
+    col_l, col_c, col_r = st.columns([1, 2, 1])
+    with col_c:
+        if 'run_compare' not in st.session_state:
+            st.session_state['run_compare'] = False
+        if st.button('Show Algorithm Comparison Plots', key='show_compare'):
+            st.session_state['run_compare'] = True
+
+    # Determine whether to run comparison: either session flag or query param
+    run_compare = bool(st.session_state.get('run_compare')) or bool(st.query_params.get('compare'))
+
+    try:
+        from plot_comparison import find_and_compare
+
+        if run_compare:
+            with st.spinner('Generating comparison plots (this may take a few seconds)...'):
+                comp_res = find_and_compare(results_dir='.', out_dir='plots')
+
+            # Display combined overlap plot
+            combined = comp_res.get('combined_plot')
+            if combined and os.path.exists(combined):
+                st.image(combined, caption='Overlap@k — all topics', use_column_width=True)
+
+            # Display per-query metrics table (Precision/Recall/F1) if available
+            metrics_csv = os.path.join('plots', 'metrics_per_query.csv')
+            if os.path.exists(metrics_csv):
+                try:
+                    df_metrics = pd.read_csv(metrics_csv)
+                    st.subheader('Per-query Metrics (Precision / Recall / F1)')
+                    st.dataframe(df_metrics)
+
+                    # Show aggregate averages per model as a bar chart
+                    if {'model', 'precision', 'recall', 'f1'}.issubset(df_metrics.columns):
+                        agg = df_metrics.groupby('model')[['precision', 'recall', 'f1']].mean().reset_index()
+                        agg = agg.set_index('model')
+                        st.subheader('Average Metrics by Model')
+                        st.bar_chart(agg)
+                except Exception as e:
+                    st.warning(f'Could not read metrics CSV: {e}')
+
+            # Display confusion matrices (per-topic, two-per-row: BM25 left, TF-IDF right)
+            plots_dir = 'plots'
+            if os.path.exists(plots_dir):
+                conf_files = [f for f in os.listdir(plots_dir) if f.startswith('confusion_') and f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+                if conf_files:
+                    st.subheader('Confusion Matrices (per-topic)')
+                    mapping = {}
+                    for f in conf_files:
+                        name = os.path.splitext(f)[0]  # remove extension
+                        rest = name[len('confusion_'):]
+                        if '_' not in rest:
+                            continue
+                        topic_part, model_part = rest.rsplit('_', 1)
+                        mlow = model_part.lower()
+                        if 'tf' in mlow or 'tf-idf' in mlow:
+                            model_key = 'TF-IDF'
+                        else:
+                            model_key = 'BM25'
+                        mapping.setdefault(topic_part, {})[model_key] = os.path.join(plots_dir, f)
+
+                    for topic in sorted(mapping.keys()):
+                        models = mapping[topic]
+                        label = topic.replace('_', ' ')
+                        # center the topic title
+                        outer_title = st.columns([1, 3, 1])
+                        with outer_title[1]:
+                            st.markdown(f"<div style='text-align:center;margin:8px 0 12px 0;font-weight:700;font-size:1.05rem'>{label}</div>", unsafe_allow_html=True)
+
+                        # center the two images and add a small spacer between them
+                        outer = st.columns([1, 4, 1])
+                        with outer[1]:
+                            left_col, spacer, right_col = st.columns([1, 0.2, 1])
+                            with left_col:
+                                p = models.get('BM25')
+                                if p and os.path.exists(p):
+                                    st.image(p, caption=f"BM25 — {label}", width=320)
+                            # spacer column intentionally left empty to create gap
+                            with right_col:
+                                p = models.get('TF-IDF')
+                                if p and os.path.exists(p):
+                                    st.image(p, caption=f"TF-IDF — {label}", width=320)
+    except Exception as e:
+        st.warning(f'Could not load comparison module or generate plots: {e}')
 
     # Render Streamlit input inside the styled wrapper
     query = st.text_input(
