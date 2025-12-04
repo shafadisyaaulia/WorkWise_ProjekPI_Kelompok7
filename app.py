@@ -341,7 +341,7 @@ st.markdown("""
     .team-photo-wrap {
         width: 180px;
         height: 210px;
-        border-radius: 18px;
+        border-radius: 12px;
         overflow: hidden;
         position: relative;
         border: 5px solid rgba(255,255,255,0.92);
@@ -355,7 +355,7 @@ st.markdown("""
         height: 100%;
         object-fit: contain;
         object-position: center;
-        border-radius: 18px;
+        border-radius: 12px;
         display: block;
         transition: transform 0.6s cubic-bezier(.2,.9,.2,1);
     }
@@ -985,20 +985,7 @@ if is_search_page:
         key="search_input_search"
     )
 
-    # --- RESULTS SECTION for standalone search page ---
-    if query:
-        st.markdown("<div class='loading-container'><span class='loading-dots'>&#9889; Searching for best results...</span></div>", unsafe_allow_html=True)
-        time.sleep(0.3)
-        col1, col2 = st.columns(2, gap="large")
-        with col1:
-            tfidf_res = simple_search(query, tfidf, X, df_all)
-            render_results(tfidf_res, "TF-IDF Results", "&#128202;")
-        with col2:
-            bm25_res = bm25_search(query, bm25, df_all)
-            render_results(bm25_res, "BM25 Results", "&#127919;")
-
-# --- RESULTS SECTION for standalone search page ---
-# Pastikan query sudah didefinisikan sebelumnya, jika belum tambahkan ini:
+# --- RESULTS SECTION for standalone search page ---:
 if 'query' not in locals():
     query = None
 
