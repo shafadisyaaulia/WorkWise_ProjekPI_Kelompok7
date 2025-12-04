@@ -922,115 +922,186 @@ if not is_search_page:
 </div>
 """, unsafe_allow_html=True)
 
-# --- SEARCH SECTION (render only on standalone search page) ---
+# --- SEARCH SECTION (standalone search page) ---
 if is_search_page:
     st.markdown("""
-<div class='search-section' id='search' style='max-width:560px;margin:30px auto;padding:40px 28px;width:calc(100% - 56px);background:linear-gradient(135deg,rgba(191,219,254,0.4) 0%,rgba(209,250,229,0.4) 100%);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,0.10),0 2px 6px rgba(0,0,0,0.04);backdrop-filter:blur(6px);border:1px solid rgba(6,182,212,0.08);'>
+<div class='search-section' id='search' style='max-width:1200px;margin:40px auto;padding:48px 36px;width:calc(100% - 80px);background:linear-gradient(135deg,rgba(191,219,254,0.36) 0%,rgba(209,250,229,0.18) 100%);border-radius:20px;box-shadow:0 18px 36px -12px rgba(6, 182, 212, 0.10);backdrop-filter:blur(6px);border:1px solid rgba(6,182,212,0.08);'>
     <div style='display:flex;flex-direction:column;align-items:center;max-width:100%;margin:0 auto;'>
-        <h2 class='search-title' style='margin-bottom:14px;font-size:2rem;color:#0891b2;'>&#128270; Start Your Search</h2>
-        <p style='color:#475569;font-size:0.95rem;margin-bottom:20px;text-align:center;'>Temukan informasi yang Anda butuhkan dengan dual-algorithm search yang akurat dan cepat</p>
-                <div style='width:100%;max-width:350px;margin:0 auto;'>
+        <h2 class='search-title' style='margin-bottom:12px;font-size:2.4rem;color:#0891b2;'>&#128270; Start Your Search</h2>
+        <p style='color:#475569;font-size:1.02rem;margin-bottom:18px;text-align:center;max-width:860px;'>Temukan informasi yang Anda butuhkan dengan dual-algorithm search yang akurat dan cepat</p>
+        <div style='width:100%;max-width:1100px;margin:8px auto 6px auto;'>
             <style>
                 .stTextInput > div > div > input {
+                    width:100% !important;
                     background: rgba(255,255,255,0.96);
                     border: 2px solid rgba(229,231,235,0.6);
-                    border-radius: 40px;
-                    padding: 12px 28px;
+                    border-radius: 999px;
+                    padding: 16px 34px;
+                    color: #1f2937;
                     font-size: 1.05rem;
-                    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-                    transition: border 0.25s, box-shadow 0.25s;
+                    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+                    transition: all 0.25s ease;
                 }
                 .stTextInput > div > div > input:focus {
-                    border-color: #0891b2;
-                    box-shadow: 0 8px 26px rgba(8,145,178,0.15);
-                    outline: none;
+                    border-color: rgba(8,145,178,0.95);
+                    box-shadow: 0 18px 46px rgba(8,145,178,0.12), 0 0 0 8px rgba(8,145,178,0.06);
+                    transform: translateY(-2px);
                 }
-                .search-input-icon {
-                    position: absolute;
-                    left: 18px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    font-size: 1.15rem;
-                    color: rgba(37,99,235,0.9);
-                    pointer-events: none;
-                }
-                .search-input-wrapper {
-                    position: relative;
-                }
+                .stTextInput > div > div > input::placeholder { color: #9ca3af; font-size:1.03rem; }
             </style>
-            <div class='search-input-wrapper'>
-                <span class='search-input-icon'></span>
-                <!-- Streamlit input will be rendered here -->
+            <div class='search-input-wrapper' style='position:relative;'>
+                <!-- Streamlit input will be rendered below -->
+            </div>
+        </div>
+
+        <div style='max-width:900px;width:90%;display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:30px;align-items:stretch;'>
+            <div style='background:var(--card-bg);border-radius:16px;padding:22px;border:1px solid rgba(229,231,235,0.6);box-shadow:0 6px 18px rgba(0,0,0,0.06);text-align:left;'>
+                <div style='font-size:1.6rem;margin-bottom:10px;'>💡</div>
+                <div style='font-weight:700;color:#0891b2;margin-bottom:8px;font-size:1rem;'>Search Tips</div>
+                <div style='color:#64748b;font-size:0.95rem;line-height:1.5;'>Enter specific keywords or phrases to find relevant documents. Use quotation marks for exact matches.</div>
+            </div>
+            <div style='background:var(--card-bg);border-radius:16px;padding:22px;border:1px solid rgba(229,231,235,0.6);box-shadow:0 6px 18px rgba(0,0,0,0.06);text-align:left;'>
+                <div style='font-size:1.6rem;margin-bottom:10px;'>⚡</div>
+                <div style='font-weight:700;color:#059669;margin-bottom:8px;font-size:1rem;'>Dual Algorithm</div>
+                <div style='color:#64748b;font-size:0.95rem;line-height:1.5;'>We compare TF-IDF and BM25 algorithms to give you the most accurate and relevant search results.</div>
             </div>
         </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# --- ALGORITHM COMPARISON (Landing Page) ---
-if not is_search_page:
-    st.markdown("""
-<div style='margin-top:26px;'>
-    <div class='section-header'>
-        <div style='display:flex;align-items:center;justify-content:center;gap:14px;'>
-            <span style='font-size:1.4rem;'>&#128300;</span>
-            <span style='font-weight:800;font-size:2.2rem;'>Algorithm Comparison</span>
-        </div>
-        <p style='color:#92400e;margin-top:12px;text-align:center;font-size:1.05rem;'>Visual comparison of TF-IDF vs BM25 (Overlap@k and rank differences). Click the button to generate or refresh plots.</p>
-        <div style='display:flex;justify-content:center;margin-top:18px;'>
-            <div id='compare-cta-placeholder'></div>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-    # Style the Streamlit button so it visually matches the CTA inside `.section-header`
+    # Ensure the Streamlit text input visually aligns inside the search hero
     st.markdown("""
     <style>
-        .section-header .stButton>button{
-            background: linear-gradient(90deg,#0891b2,#06b6d4) !important;
-            color: white !important;
-            padding: 10px 20px !important;
-            border-radius: 40px !important;
-            font-weight: 700 !important;
-            border: none !important;
-            box-shadow: 0 8px 20px rgba(6,182,212,0.14) !important;
+        /* target the widget container that immediately follows the search-section */
+        .search-section + div .stTextInput {
+            max-width: 1100px;
+            width: 90%;
+            margin: 6px auto 0 auto;
         }
-        .section-header .stButton>button:hover{ transform: translateY(-3px); }
+        .search-section + div .stTextInput > div > div > input {
+            width: 100% !important;
+            border-radius: 999px;
+            padding: 16px 34px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+        }
     </style>
     """, unsafe_allow_html=True)
 
-    # Center the Streamlit button under the section (appears visually inside the section header)
-    col_l, col_c, col_r = st.columns([1, 2, 1])
+    # Render an actual Streamlit text input so the standalone search page is interactive
+    query = st.text_input(
+        label="Search",
+        placeholder="Type your keywords here and press Enter...",
+        label_visibility="collapsed",
+        key="search_input_search"
+    )
+
+    # --- RESULTS SECTION for standalone search page ---
+    if query:
+        st.markdown("<div class='loading-container'><span class='loading-dots'>&#9889; Searching for best results...</span></div>", unsafe_allow_html=True)
+        time.sleep(0.3)
+        col1, col2 = st.columns(2, gap="large")
+        with col1:
+            tfidf_res = simple_search(query, tfidf, X, df_all)
+            render_results(tfidf_res, "TF-IDF Results", "&#128202;")
+        with col2:
+            bm25_res = bm25_search(query, bm25, df_all)
+            render_results(bm25_res, "BM25 Results", "&#127919;")
+
+# --- RESULTS SECTION for standalone search page ---
+# Pastikan query sudah didefinisikan sebelumnya, jika belum tambahkan ini:
+if 'query' not in locals():
+    query = None
+
+if query:
+    st.markdown("<div class='loading-container'><span class='loading-dots'>&#9889; Searching for best results...</span></div>", unsafe_allow_html=True)
+    time.sleep(0.3)
+    col1, col2 = st.columns(2, gap="large")
+    with col1:
+        tfidf_res = simple_search(query, tfidf, X, df_all)
+        render_results(tfidf_res, "TF-IDF Results", "&#128202;")
+    with col2:
+        bm25_res = bm25_search(query, bm25, df_all)
+        render_results(bm25_res, "BM25 Results", "&#127919;")
+
+if not is_search_page:
+    # Initialize session state for button
+    if 'run_compare' not in st.session_state:
+        st.session_state['run_compare'] = False
+    
+    # Create the gradient box - centered with text in the middle
+    st.markdown("""
+    <div style='margin-top: 80px; display: flex; justify-content: center;'>
+        <div style='background: linear-gradient(135deg, #06b6d4, #34d399); padding: 60px 80px; border-radius: 20px; color: white; text-align: center; max-width: 1150px; width: 100%;'>
+            <div style='font-size: 3rem; font-weight: 800; margin-bottom: 25px;'>Algorithm Comparison</div>
+            <p style='font-size: 1.1rem; font-weight: 400; margin: 0; opacity: 0.95; line-height: 1.7;'>Visual comparison of TF-IDF vs BM25 (Overlap@k and rank<br>differences). Click the button to generate or refresh plots.</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Place the button centered below the box
+    st.markdown("<div style='margin-top: 30px; display: flex; justify-content: center;'>", unsafe_allow_html=True)
+    col_l, col_c, col_r = st.columns([1.2, 1.6, 1.2])
     with col_c:
-        if 'run_compare' not in st.session_state:
-            st.session_state['run_compare'] = False
-        if st.button('Show Algorithm Comparison Plots', key='show_compare'):
+        # Custom styling for the button - DARK BLUE
+        st.markdown("""
+        <style>
+            div[data-testid="column"] button[kind="secondary"] {
+                background-color: #1e3a8a !important;
+                color: white !important;
+                padding: 16px 40px !important;
+                border-radius: 10px !important;
+                font-weight: 600 !important;
+                font-size: 1.05rem !important;
+                border: none !important;
+                box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3) !important;
+                transition: all 0.3s ease !important;
+                width: 100% !important;
+                white-space: nowrap !important;
+            }
+            
+            div[data-testid="column"] button[kind="secondary"]:hover {
+                transform: translateY(-2px) !important;
+                box-shadow: 0 6px 25px rgba(30, 58, 138, 0.4) !important;
+                background-color: #1e40af !important;
+            }
+            
+            div[data-testid="column"] button[kind="secondary"]:active {
+                transform: translateY(0) !important;
+            }
+        </style>
+        """, unsafe_allow_html=True)
+        
+        if st.button('Show Algorithm Comparison Plots', key='show_compare', type='secondary'):
             st.session_state['run_compare'] = True
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # Determine whether to run comparison: either session flag or query param
     run_compare = bool(st.session_state.get('run_compare')) or bool(st.query_params.get('compare'))
 
     try:
         from plot_comparison import find_and_compare
-
+        import os
+        
         if run_compare:
             with st.spinner('Generating comparison plots (this may take a few seconds)...'):
                 comp_res = find_and_compare(results_dir='.', out_dir='plots')
-
+            
             # Display combined overlap plot
             combined = comp_res.get('combined_plot')
             if combined and os.path.exists(combined):
                 st.image(combined, caption='Overlap@k — all topics', use_column_width=True)
-
+            
             # Display per-query metrics table (Precision/Recall/F1) if available
             metrics_csv = os.path.join('plots', 'metrics_per_query.csv')
             if os.path.exists(metrics_csv):
                 try:
+                    import pandas as pd
                     df_metrics = pd.read_csv(metrics_csv)
                     st.subheader('Per-query Metrics (Precision / Recall / F1)')
                     st.dataframe(df_metrics)
-
+                    
                     # Show aggregate averages per model as a bar chart
                     if {'model', 'precision', 'recall', 'f1'}.issubset(df_metrics.columns):
                         agg = df_metrics.groupby('model')[['precision', 'recall', 'f1']].mean().reset_index()
@@ -1039,16 +1110,18 @@ if not is_search_page:
                         st.bar_chart(agg)
                 except Exception as e:
                     st.warning(f'Could not read metrics CSV: {e}')
-
+            
             # Display confusion matrices (per-topic, two-per-row: BM25 left, TF-IDF right)
             plots_dir = 'plots'
             if os.path.exists(plots_dir):
                 conf_files = [f for f in os.listdir(plots_dir) if f.startswith('confusion_') and f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+                
                 if conf_files:
                     st.subheader('Confusion Matrices (per-topic)')
+                    
                     mapping = {}
                     for f in conf_files:
-                        name = os.path.splitext(f)[0]  # remove extension
+                        name = os.path.splitext(f)[0]
                         rest = name[len('confusion_'):]
                         if '_' not in rest:
                             continue
@@ -1059,16 +1132,15 @@ if not is_search_page:
                         else:
                             model_key = 'BM25'
                         mapping.setdefault(topic_part, {})[model_key] = os.path.join(plots_dir, f)
-
+                    
                     for topic in sorted(mapping.keys()):
                         models = mapping[topic]
                         label = topic.replace('_', ' ')
-                        # center the topic title
+                        
                         outer_title = st.columns([1, 3, 1])
                         with outer_title[1]:
                             st.markdown(f"<div style='text-align:center;margin:8px 0 12px 0;font-weight:700;font-size:1.05rem'>{label}</div>", unsafe_allow_html=True)
-
-                        # center the two images and add a small spacer between them
+                        
                         outer = st.columns([1, 4, 1])
                         with outer[1]:
                             left_col, spacer, right_col = st.columns([1, 0.2, 1])
@@ -1076,51 +1148,29 @@ if not is_search_page:
                                 p = models.get('BM25')
                                 if p and os.path.exists(p):
                                     st.image(p, caption=f"BM25 — {label}", width=320)
-                            # spacer column intentionally left empty to create gap
                             with right_col:
                                 p = models.get('TF-IDF')
                                 if p and os.path.exists(p):
                                     st.image(p, caption=f"TF-IDF — {label}", width=320)
+    
     except Exception as e:
         st.warning(f'Could not load comparison module or generate plots: {e}')
 
-    # Render Streamlit input inside the styled wrapper
-    query = st.text_input(
-        label="", 
-        placeholder="Type your keywords here and press Enter...", 
-        label_visibility="collapsed", 
-        key="search_input"
-    )
-
-    # --- RESULTS SECTION ---
-    if query:
-        st.markdown("<div class='loading-container'><span class='loading-dots'>&#9889; Searching for best results...</span></div>", unsafe_allow_html=True)
-        time.sleep(0.3)
-        
-        col1, col2 = st.columns(2, gap="large")
-        
-        with col1:
-            tfidf_res = simple_search(query, tfidf, X, df_all)
-            render_results(tfidf_res, "TF-IDF Results", "&#128202;")
-        
-        with col2:
-            bm25_res = bm25_search(query, bm25, df_all)
-            render_results(bm25_res, "BM25 Results", "&#127919;")
-    else:
-        st.markdown("""
-        <div style='max-width:480px;margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;'>
-            <div style='background:linear-gradient(135deg,rgba(6,182,212,0.08),rgba(52,211,153,0.06));border-radius:16px;padding:20px;border:1px solid rgba(6,182,212,0.15);box-shadow:0 4px 12px rgba(0,0,0,0.06);'>
-                <div style='font-size:1.6rem;margin-bottom:10px;'>&#128161;</div>
-                <div style='font-weight:700;color:#0891b2;margin-bottom:8px;font-size:0.95rem;'>Search Tips</div>
-                <div style='color:#64748b;font-size:0.85rem;line-height:1.5;'>Enter specific keywords or phrases to find relevant documents. Use quotation marks for exact matches.</div>
-            </div>
-            <div style='background:linear-gradient(135deg,rgba(52,211,153,0.08),rgba(6,182,212,0.06));border-radius:16px;padding:20px;border:1px solid rgba(52,211,153,0.15);box-shadow:0 4px 12px rgba(0,0,0,0.06);'>
-                <div style='font-size:1.6rem;margin-bottom:10px;'>⚡</div>
-                <div style='font-weight:700;color:#059669;margin-bottom:8px;font-size:0.95rem;'>Dual Algorithm</div>
-                <div style='color:#64748b;font-size:0.85rem;line-height:1.5;'>We compare TF-IDF and BM25 algorithms to give you the most accurate and relevant search results.</div>
-            </div>
+if is_search_page:
+    st.markdown("""
+    <div style='max-width:480px;margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;'>
+        <div style='background:linear-gradient(135deg,rgba(6,182,212,0.08),rgba(52,211,153,0.06));border-radius:16px;padding:20px;border:1px solid rgba(6,182,212,0.15);box-shadow:0 4px 12px rgba(0,0,0,0.06);'>
+            <div style='font-size:1.6rem;margin-bottom:10px;'>&#128161;</div>
+            <div style='font-weight:700;color:#0891b2;margin-bottom:8px;font-size:0.95rem;'>Search Tips</div>
+            <div style='color:#64748b;font-size:0.85rem;line-height:1.5;'>Enter specific keywords or phrases to find relevant documents. Use quotation marks for exact matches.</div>
         </div>
-        """, unsafe_allow_html=True)
+        <div style='background:linear-gradient(135deg,rgba(52,211,153,0.08),rgba(6,182,212,0.06));border-radius:16px;padding:20px;border:1px solid rgba(52,211,153,0.15);box-shadow:0 4px 12px rgba(0,0,0,0.06);'>
+            <div style='font-size:1.6rem;margin-bottom:10px;'>⚡</div>
+            <div style='font-weight:700;color:#059669;margin-bottom:8px;font-size:0.95rem;'>Dual Algorithm</div>
+            <div style='color:#64748b;font-size:0.85rem;line-height:1.5;'>We compare TF-IDF and BM25 algorithms to give you the most accurate and relevant search results.</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # --- ABOUT US SECTION ---
 if not is_search_page:
@@ -1144,12 +1194,13 @@ if not is_search_page:
     </div>
     """, unsafe_allow_html=True)
 
-def team_card(img_path, name, npm, role, badge):
-    # Render the card and include the image in the same HTML block so CSS can control sizing
+# --- FUNCTION TEAM CARD ---
+def team_card(img_url, name, npm, role, badge):
+    # Render the card and include the image from the URL in the same HTML block so CSS can control sizing
     st.markdown(f"""
     <div class='team-card' style='margin-bottom: 10px;'>
         <div class='team-photo-wrap'>
-            <img src="{img_path}" class='team-photo' alt='{name}' />
+            <img src="{img_url}" class='team-photo' alt='{name}' />
             <div class='team-photo-overlay'>{role}</div>
         </div>
         <div class='team-name' style='margin-top:6px;'>{name}</div>
@@ -1159,15 +1210,21 @@ def team_card(img_path, name, npm, role, badge):
     </div>
     """, unsafe_allow_html=True)
 
-if not is_search_page:
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        team_card("images/team1.jpg", "Shafa Disya Aulia", "2308107010002", "Project Lead & Backend Developer", "Developer")
-    with col2:
-        team_card("images/team3.jpg", "Bunga Rashikah Haya", "2308107010010", "Algorithm Specialist", "Developer")
-    with col3:
-        team_card("images/team2.jpg", "Dian Nazira", "2308107010011", "UI/UX Designer & Frontend Developer", "Designer")
+# --- Menampilkan Gambar yang Berbeda untuk Setiap Anggota Tim ---
+# Ganti dengan link gambar yang sesuai untuk setiap anggota tim
+img1_url = "https://i.ibb.co.com/35d3Q44Q/team1.jpg"
+img2_url = "https://i.ibb.co.com/TD63H9pF/team2.jpg"
+img3_url = "https://i.ibb.co.com/4njfTPcw/team3.jpg"
 
+# Menampilkan gambar yang berbeda-beda di dalam kolom
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    team_card(img1_url, "Shafa Disya Aulia", "2308107010002", "Project Lead & Backend Developer", "Developer")
+with col2:
+    team_card(img2_url, "Bunga Rasikhah Haya", "2308107010010", "Algorithm Specialist", "Developer")
+with col3:
+    team_card(img3_url, "Dian Nazira", "2308107010011", "UI/UX Designer & Frontend Developer", "Designer")
 # --- FOOTER ---
 if not is_search_page:
     st.markdown("""
