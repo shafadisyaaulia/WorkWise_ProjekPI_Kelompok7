@@ -340,8 +340,8 @@ st.markdown("""
 
     .team-photo-wrap {
         width: 180px;
-        height: 120px;
-        border-radius: 12px;
+        height: 210px;
+        border-radius: 18px;
         overflow: hidden;
         position: relative;
         border: 5px solid rgba(255,255,255,0.92);
@@ -353,7 +353,9 @@ st.markdown("""
     .team-photo-wrap img.team-photo {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        object-position: center;
+        border-radius: 18px;
         display: block;
         transition: transform 0.6s cubic-bezier(.2,.9,.2,1);
     }
@@ -1172,20 +1174,10 @@ if not is_search_page:
 """, unsafe_allow_html=True)
 
 # --- TEAM SECTION ---
-
 if not is_search_page:
     st.markdown("""
     <div class='team-section' id='team'>
-        <h2 class='section-title'>&#128101; Meet Our Team</h2>
-        <p class='section-subtitle'>The brilliant minds behind WorkWise Search System</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# --- TEAM SECTION ---
-if not is_search_page:
-    st.markdown("""
-    <div class='team-section' id='team'>
-        <h2 class='section-title'>&#128101; Meet Our Team</h2>
+        <h2 class='section-title'>&#128101; Meet Our Team Amazing</h2>
         <p class='section-subtitle'>The brilliant minds behind WorkWise Search System</p>
     </div>
     """, unsafe_allow_html=True)
