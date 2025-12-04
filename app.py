@@ -953,19 +953,6 @@ if is_search_page:
                 <!-- Streamlit input will be rendered below -->
             </div>
         </div>
-
-        <div style='max-width:900px;width:90%;display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:30px;align-items:stretch;'>
-            <div style='background:var(--card-bg);border-radius:16px;padding:22px;border:1px solid rgba(229,231,235,0.6);box-shadow:0 6px 18px rgba(0,0,0,0.06);text-align:left;'>
-                <div style='font-size:1.6rem;margin-bottom:10px;'>💡</div>
-                <div style='font-weight:700;color:#0891b2;margin-bottom:8px;font-size:1rem;'>Search Tips</div>
-                <div style='color:#64748b;font-size:0.95rem;line-height:1.5;'>Enter specific keywords or phrases to find relevant documents. Use quotation marks for exact matches.</div>
-            </div>
-            <div style='background:var(--card-bg);border-radius:16px;padding:22px;border:1px solid rgba(229,231,235,0.6);box-shadow:0 6px 18px rgba(0,0,0,0.06);text-align:left;'>
-                <div style='font-size:1.6rem;margin-bottom:10px;'>⚡</div>
-                <div style='font-weight:700;color:#059669;margin-bottom:8px;font-size:1rem;'>Dual Algorithm</div>
-                <div style='color:#64748b;font-size:0.95rem;line-height:1.5;'>We compare TF-IDF and BM25 algorithms to give you the most accurate and relevant search results.</div>
-            </div>
-        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -1194,37 +1181,42 @@ if not is_search_page:
     </div>
     """, unsafe_allow_html=True)
 
-# --- FUNCTION TEAM CARD ---
-def team_card(img_url, name, npm, role, badge):
-    # Render the card and include the image from the URL in the same HTML block so CSS can control sizing
-    st.markdown(f"""
-    <div class='team-card' style='margin-bottom: 10px;'>
-        <div class='team-photo-wrap'>
-            <img src="{img_url}" class='team-photo' alt='{name}' />
-            <div class='team-photo-overlay'>{role}</div>
-        </div>
-        <div class='team-name' style='margin-top:6px;'>{name}</div>
-        <div class='team-npm'>NPM : {npm}</div>
-        <div class='team-role' style='margin-bottom:6px;'>{role}</div>
-        <span class='team-badge'>{badge}</span>
+# --- TEAM SECTION ---
+if not is_search_page:
+    st.markdown("""
+    <div class='team-section' id='team'>
+        <h2 class='section-title'>&#128101; Meet Our Team</h2>
+        <p class='section-subtitle'>The brilliant minds behind WorkWise Search System</p>
     </div>
     """, unsafe_allow_html=True)
 
-# --- Menampilkan Gambar yang Berbeda untuk Setiap Anggota Tim ---
-# Ganti dengan link gambar yang sesuai untuk setiap anggota tim
-img1_url = "https://i.ibb.co.com/35d3Q44Q/team1.jpg"
-img2_url = "https://i.ibb.co.com/TD63H9pF/team2.jpg"
-img3_url = "https://i.ibb.co.com/4njfTPcw/team3.jpg"
+    # --- FUNCTION TEAM CARD ---
+    def team_card(img_url, name, npm, role, badge):
+        st.markdown(f"""
+        <div class='team-card' style='margin-bottom: 10px;'>
+            <div class='team-photo-wrap'>
+                <img src="{img_url}" class='team-photo' alt='{name}' />
+                <div class='team-photo-overlay'>{role}</div>
+            </div>
+            <div class='team-name' style='margin-top:6px;'>{name}</div>
+            <div class='team-npm'>NPM : {npm}</div>
+            <div class='team-role' style='margin-bottom:6px;'>{role}</div>
+            <span class='team-badge'>{badge}</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-# Menampilkan gambar yang berbeda-beda di dalam kolom
-col1, col2, col3 = st.columns(3)
+    img1_url = "https://i.ibb.co.com/35d3Q44Q/team1.jpg"
+    img2_url = "https://i.ibb.co.com/TD63H9pF/team2.jpg"
+    img3_url = "https://i.ibb.co.com/4njfTPcw/team3.jpg"
 
-with col1:
-    team_card(img1_url, "Shafa Disya Aulia", "2308107010002", "Project Lead & Backend Developer", "Developer")
-with col2:
-    team_card(img2_url, "Bunga Rasikhah Haya", "2308107010010", "Algorithm Specialist", "Developer")
-with col3:
-    team_card(img3_url, "Dian Nazira", "2308107010011", "UI/UX Designer & Frontend Developer", "Designer")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        team_card(img1_url, "Shafa Disya Aulia", "2308107010002", "Project Lead & Backend Developer", "Developer")
+    with col2:
+        team_card(img2_url, "Bunga Rasikhah Haya", "2308107010010", "Algorithm Specialist", "Developer")
+    with col3:
+        team_card(img3_url, "Dian Nazira", "2308107010011", "UI/UX Designer & Frontend Developer", "Designer")
+
 # --- FOOTER ---
 if not is_search_page:
     st.markdown("""
